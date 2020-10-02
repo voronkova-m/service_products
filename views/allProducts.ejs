@@ -1,0 +1,33 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Все продукты</title>
+    <link rel='stylesheet' href='public/css/style.css'>
+</head>
+<body>
+<%- include ('blocks/header.ejs') -%>
+<div class="block">
+    <p>Все продукты:</p>
+    <table>
+        <thead>
+            <tr><th>Артикул</th><th>Тип</th><th>Наименование</th><th>Торговая марка</th></tr>
+        </thead>
+        <tbody>
+        <% products.forEach(function(product) { %>
+            <tr>
+                <td><%= product.article %></td>
+                <td><%= product.type %></td>
+                <td><%= product.name %></td>
+                <td> <%= product.trademark %></td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+    <ul>
+        <% products.forEach(function(product) { %>
+            <li> <%= product.article %> <%= product.type %> <%= product.trademark %> <%= product.name %> </li>
+        <% }); %>
+    </ul>
+</div>
+</body>
+</html>
