@@ -1,0 +1,44 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск продуктов</title>
+    <link rel='stylesheet' href='public/css/style.css'>
+</head>
+<body>
+<%- include ('blocks/header.ejs') -%>
+<div class="block">
+    <p><b>Продукты по фильтру </b><br>
+        <br>Фильтр
+        <% typesSearch.forEach(function(typeSearch) { %>
+                <li> <%= typeSearch %> </li>
+            <% }); %>
+        <br>Параметры фильтров
+        <% searches.forEach(function(search) { %>
+            <li> <%= search %> </li>
+        <% }); %>
+
+    </p>
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Артикул</th><th>Тип</th><th>Наименование</th><th>Торговая марка</th></tr>
+        </thead>
+        <tbody>
+        <% products.forEach(function(product) { %>
+            <tr>
+                <td align="center"><%= product._id %></td>
+                <td align="center"><%= product.article %></td>
+                <td align="center"><%= product.type %></td>
+                <td align="center"><%= product.name %></td>
+                <td align="center"> <%= product.trademark %></td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+    <ul>
+        <% products.forEach(function(product) { %>
+            <li> <%= product.article %> <%= product.type %> <%= product.trademark %> <%= product.name %> </li>
+        <% }); %>
+    </ul>
+</div>
+</body>
+</html>

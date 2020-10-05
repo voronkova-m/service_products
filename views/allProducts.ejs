@@ -10,11 +10,12 @@
     <p>Все продукты:</p>
     <table>
         <thead>
-            <tr><th>Артикул</th><th>Тип</th><th>Наименование</th><th>Торговая марка</th></tr>
+            <tr><th>Id</th><th>Артикул</th><th>Тип</th><th>Наименование</th><th>Торговая марка</th></tr>
         </thead>
         <tbody>
         <% products.forEach(function(product) { %>
             <tr>
+                <td><%= product._id %></td>
                 <td><%= product.article %></td>
                 <td><%= product.type %></td>
                 <td><%= product.name %></td>
