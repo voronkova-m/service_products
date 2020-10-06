@@ -8,9 +8,20 @@
 <%- include ('blocks/header.ejs') -%>
 <div class="block">
     <p>Все продукты:</p>
+    <form action='/add_product'>
+        <button type="submit">Добавить</button>
+    </form>
     <table>
         <thead>
-            <tr><th>Id</th><th>Артикул</th><th>Тип</th><th>Наименование</th><th>Торговая марка</th></tr>
+        <tr>
+            <th>Id</th>
+            <th>Артикул</th>
+            <th>Тип</th>
+            <th>Наименование</th>
+            <th>Торговая марка</th>
+            <th></th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
         <% products.forEach(function(product) { %>
@@ -20,15 +31,22 @@
                 <td><%= product.type %></td>
                 <td><%= product.name %></td>
                 <td> <%= product.trademark %></td>
+                <td>
+                    <form action="/edit_product/<%= product._id %>">
+                        <button type="submit">Изменить</button>
+                    </form>
+                </td>
+                <td>
+                <td>
+                    <form action="/delete_product/<%= product._id %>" method="post">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
+                </td>
             </tr>
         <% }); %>
         </tbody>
     </table>
-    <ul>
-        <% products.forEach(function(product) { %>
-            <li> <%= product.article %> <%= product.type %> <%= product.trademark %> <%= product.name %> </li>
-        <% }); %>
-    </ul>
 </div>
 </body>
 </html>

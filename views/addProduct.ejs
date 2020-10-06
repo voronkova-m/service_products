@@ -1,21 +1,21 @@
 <html>
 <head>
-    <title>Добавление товара</title>
-    <meta charset="utf-8" />
+    <title>Добавление продукта</title>
+    <meta charset="utf-8"/>
 </head>
 <body>
 <%- include ('blocks/header.ejs') -%>
 <h1>Введите данные</h1>
-<form action="/addProduct" method="post">
+<form action="/add_product" method="post">
     <label>Артикул</label><br>
-    <input type="text" name="article" /><br><br>
+    <input type="text" name="article"/><br><br>
     <label>Тип</label><br>
-    <input type="text" name="type" /><br><br>
+    <input type="text" name="type"/><br><br>
     <label>Наименование</label><br>
-    <input type="text" name="name" /><br><br>
+    <input type="text" name="name"/><br><br>
     <label>Торговая марка</label><br>
-    <input type="text" name="trademark" /><br><br>
-    <input type="submit" value="Отправить" />
+    <input type="text" name="trademark"/><br><br>
+    <button type="submit"> Добавить</button>
 </form>
 </body>
 </html>
