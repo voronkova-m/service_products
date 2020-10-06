@@ -7,17 +7,6 @@
 <body>
 <%- include ('blocks/header.ejs') -%>
 <div class="block">
-    <p><b>Продукты по фильтру </b><br>
-        <br>Фильтр
-        <% typesSearch.forEach(function(typeSearch) { %>
-    <li> <%= typeSearch %> </li>
-    <% }); %>
-    <br>Параметры фильтров
-    <% searches.forEach(function(search) { %>
-        <li> <%= search %> </li>
-    <% }); %>
-
-    </p>
     <table>
         <thead>
         <tr><th>ID</th><th>Артикул</th><th>Тип</th><th>Наименование</th><th>Торговая марка</th></tr>

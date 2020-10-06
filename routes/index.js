@@ -11,7 +11,6 @@ module.exports = function (app) {
     app.get('/products', function (req, res, next) {
         Product.find({}, function (err, products) {
             if (err) return next(err);
-            //res.json(products);
             res.render('allProducts', {products: products});
         });
     });
@@ -24,14 +23,13 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/products/:id', function (req, res, next) {
+    app.get('/product/:id', function (req, res, next) {
         Product.findById(req.params.id, function (err, product) {
             if (product == undefined) {
                 res.render('error', {message: "Продукта с таким id нет"});
             } else {
-                res.render('product', {products: product, typeSearch: "_id", search: req.params.id})
+                res.json(product);
             }
-            res.json(product);
         });
     });
 
@@ -58,40 +56,16 @@ module.exports = function (app) {
                     j++;
                 }
             });
-            var typeSearch = [];
-            var search = [];
-            j = 0;
-            if (article != undefined) {
-                typeSearch[j] = 'article';
-                search[j] = article;
-                j++;
-            }
-            if (type != undefined) {
-                typeSearch[j] = 'type';
-                search[j] = type;
-                j++;
-            }
-            if (name != undefined) {
-                typeSearch[j] = 'name';
-                search[j] = name;
-                j++;
-            }
-            if (trademark != undefined) {
-                typeSearch[j] = 'trademark';
-                search[j] = trademark;
-                j++;
-            }
-            //res.render('product', {products: filtrProducts, typesSearch: typeSearch, searches: search});
             res.send(filtrProducts);
             return filtrProducts;
         });
     });
 
-    app.get("/add_product", function (req, res) {
+    app.get('/add_product', function (req, res) {
         res.render('addProduct');
     });
 
-    app.post('/addProduct', function (req, res) {
+    app.post('/add_product', function (req, res) {
         var article = req.body.article;
         var type = req.body.type;
         var name = req.body.name;
@@ -104,23 +78,53 @@ module.exports = function (app) {
                 console.log(err.message);
                 return;
             }
-            var products = body;
-            products = JSON.parse(products);
-            var filtrProducts = [];
-            var j = 0;
-            products.forEach(function (product) {
-                if (((product.article === article) || (article === undefined)) &&
-                    ((product.type === type) || (type === undefined)) &&
-                    ((product.name === name) || (name === undefined)) &&
-                    ((product.trademark === trademark) || (trademark === undefined))) {
-                    filtrProducts[j] = product;
-                    j++;
-                }
-            });
-            //res.render('product', {products: filtrProducts, typesSearch: typeSearch, searches: search});
-            res.send(filtrProducts);
-            return filtrProducts;
+            res.redirect("http://127.0.0.1:3000/products")
         });
     });
 
+    app.get('/edit_product/:id', function (req, res) {
+        request('http://127.0.0.1:3000/product/' + req.params.id, function (err, res2, body) {
+            if (err) {
+                res2.render('error', {message: err.message});
+                console.log(err.message);
+                return;
+            }
+            var product = body;
+            product = JSON.parse(product);
+            res.render('editProduct', {product: product});
+        });
+    });
+
+    app.post('/edit_product/:id', function (req, res) {
+        var article = req.body.article;
+        var type = req.body.type;
+        var name = req.body.name;
+        var trademark = req.body.trademark;
+        Product.updateOne({_id: req.params.id}, {
+            $set: {
+                article: article,
+                type: type,
+                name: name,
+                trademark: trademark
+            }
+        }, function (err) {
+            if (err) {
+                res.render('error', {message: err.message});
+                console.log(err.message);
+                return;
+            }
+            res.redirect("http://127.0.0.1:3000/products")
+        });
+    });
+
+    app.post('/delete_product/:id', function (req, res) {
+        Product.remove({_id: req.params.id}, function (err) {
+            if (err) {
+                res.render('error', {message: err.message});
+                console.log(err.message);
+                return;
+            }
+            res.redirect("http://127.0.0.1:3000/products")
+        });
+    });
 };
