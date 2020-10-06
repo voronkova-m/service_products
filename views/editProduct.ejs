@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Изменение продукта</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<%- include ('blocks/header.ejs') -%>
+<h1>Введите данные</h1>
+<form action="/edit_product/<%= product._id %>" method="post">
+    <label>Артикул</label><br>
+    <input type="text" name="article" value="<%= product.article %>" /><br><br>
+    <label>Тип</label><br>
+    <input type="text" name="type" value="<%= product.type %>" /><br><br>
+    <label>Наименование</label><br>
+    <input type="text" name="name" value="<%= product.name %>" /><br><br>
+    <label>Торговая марка</label><br>
+    <input type="text" name="trademark" value="<%= product.trademark %>" /><br><br>
+    <button type="submit" > Изменить </button>
+</form>
+</body>
+</html>
