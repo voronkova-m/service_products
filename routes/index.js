@@ -9,20 +9,37 @@ module.exports = function (app) {
 
     app.get('/products', function (req, res, next) {
         Product.find({}, function (err, products) {
-            if (err) return next(err);
+            if (err){
+                res.render('error', {message: err.message});
+                return;
+            }
             res.render('allProducts', {products: products});
         });
     });
 
     app.get('/get_products', function (req, res, next) {
         Product.find({}, function (err, products) {
-            if (err) return next(err);
+            if (err){
+                res.render('error', {message: err.message});
+                return;
+            }
             res.send(products);
             return products;
         });
     });
 
-    app.get('/product/:id', function (req, res, next) {
+    app.get('/get_list_products', function (req, res) {
+        var array = req.body["arr"];
+        Product.find({_id: array}, function (err, products) {
+            if (products == undefined) {
+                res.send(err.message);
+            } else {
+                res.send(products);
+            }
+        });
+    });
+
+    app.get('/product/:id', function (req, res) {
         Product.findById(req.params.id, function (err, product) {
             if (product == undefined) {
                 res.render('error', {message: "Продукта с таким id нет"});
@@ -39,7 +56,7 @@ module.exports = function (app) {
         var trademark = req.query.trademark;
         request('http://127.0.0.1:3000/get_products', function (err, res2, body) {
             if (err) {
-                app.use(errorhandler());
+                res.render('error', {message: err.message});
                 return;
             }
             var products = body;
@@ -74,7 +91,6 @@ module.exports = function (app) {
         newProduct.save(function (err) {
             if (err) {
                 res.render('error', {message: err.message});
-                console.log(err.message);
                 return;
             }
             res.redirect("http://127.0.0.1:3000/products")
@@ -85,7 +101,6 @@ module.exports = function (app) {
         request('http://127.0.0.1:3000/product/' + req.params.id, function (err, res2, body) {
             if (err) {
                 res2.render('error', {message: err.message});
-                console.log(err.message);
                 return;
             }
             var product = body;
@@ -109,7 +124,6 @@ module.exports = function (app) {
         }, function (err) {
             if (err) {
                 res.render('error', {message: err.message});
-                console.log(err.message);
                 return;
             }
             res.redirect("http://127.0.0.1:3000/products")
@@ -120,7 +134,6 @@ module.exports = function (app) {
         Product.remove({_id: req.params.id}, function (err) {
             if (err) {
                 res.render('error', {message: err.message});
-                console.log(err.message);
                 return;
             }
             res.redirect("http://127.0.0.1:3000/products")
