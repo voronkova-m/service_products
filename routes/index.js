@@ -39,6 +39,17 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/get_list_products_arr', function (req, res) {
+        var array = req.body["arr"];
+        Product.find({$or: [{name: array}, {type: array}, {trademark: array}]}, function (err, products) {
+            if (products == undefined) {
+                res.send(err.message);
+            } else {
+                res.send(products);
+            }
+        });
+    });
+
     app.get('/product/:id', function (req, res) {
         Product.findById(req.params.id, function (err, product) {
             if (product == undefined) {
@@ -86,7 +97,6 @@ module.exports = function (app) {
         var type = req.body.type;
         var name = req.body.name;
         var trademark = req.body.trademark;
-        console.log(article);
         var newProduct = new Product({article: article, type: type, name: name, trademark: trademark});
         newProduct.save(function (err) {
             if (err) {
@@ -94,6 +104,21 @@ module.exports = function (app) {
                 return;
             }
             res.redirect("http://127.0.0.1:3000/products")
+        });
+    });
+
+    app.post('/add_product_storage', function (req, res) {
+        var article = req.body.article;
+        var type = req.body.type;
+        var name = req.body.name;
+        var trademark = req.body.trademark;
+        var newProduct = new Product({article: article, type: type, name: name, trademark: trademark});
+        newProduct.save(function (err, product) {
+            if (err) {
+                res.render('error', {message: err.message});
+                return;
+            }
+            res.send(product)
         });
     });
 
