@@ -7,7 +7,7 @@
 <body>
 <%- include ('blocks/header.ejs') -%>
 <h1>Введите данные</h1>
-<form action="/edit_product/<%= product._id %>" method="post">
+<form action="/edit-product/<%= product._id %>" method="post">
     <label>Артикул</label><br>
     <input type="text" name="article" value="<%= product.article %>" /><br><br>
     <label>Тип</label><br>
