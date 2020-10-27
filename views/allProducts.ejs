@@ -8,7 +8,7 @@
 <%- include ('blocks/header.ejs') -%>
 <div class="block">
     <p>Все продукты:</p>
-    <form action='/add_product'>
+    <form action='/add-product'>
         <button type="submit">Добавить</button>
     </form>
     <table>
@@ -32,13 +32,13 @@
                 <td><%= product.name %></td>
                 <td> <%= product.trademark %></td>
                 <td>
-                    <form action="/edit_product/<%= product._id %>">
+                    <form action="/edit-product/<%= product._id %>">
                         <button type="submit">Изменить</button>
                     </form>
                 </td>
                 <td>
                 <td>
-                    <form action="/delete_product/<%= product._id %>" method="post">
+                    <form action="/delete-product/<%= product._id %>" method="post">
                         <button type="submit">Удалить</button>
                     </form>
                 </td>

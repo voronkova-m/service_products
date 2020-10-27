@@ -17,7 +17,7 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/get_products', function (req, res, next) {
+    app.get('/get-products', function (req, res, next) {
         Product.find({}, function (err, products) {
             if (err){
                 res.render('error', {message: err.message});
@@ -28,7 +28,8 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/get_list_products', function (req, res) {
+    
+    app.get('/get-list-products', function (req, res) {
         var array = req.body["arr"];
         Product.find({_id: array}, function (err, products) {
             if (products == undefined) {
@@ -39,7 +40,7 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/get_list_products_arr', function (req, res) {
+    app.get('/get-list-products-arr', function (req, res) {
         var array = req.body["arr"];
         Product.find({$or: [{name: array}, {type: array}, {trademark: array}]}, function (err, products) {
             if (products == undefined) {
@@ -65,7 +66,7 @@ module.exports = function (app) {
         var type = req.query.type;
         var name = req.query.name;
         var trademark = req.query.trademark;
-        request('http://127.0.0.1:3000/get_products', function (err, res2, body) {
+        request('http://127.0.0.1:3000/get-products', function (err, res2, body) {
             if (err) {
                 res.render('error', {message: err.message});
                 return;
@@ -88,11 +89,11 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/add_product', function (req, res) {
+    app.get('/add-product', function (req, res) {
         res.render('addProduct');
     });
 
-    app.post('/add_product', function (req, res) {
+    app.post('/add-product', function (req, res) {
         var article = req.body.article;
         var type = req.body.type;
         var name = req.body.name;
@@ -107,7 +108,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/add_product_storage', function (req, res) {
+    app.post('/add-product-storage', function (req, res) {
         var article = req.body.article;
         var type = req.body.type;
         var name = req.body.name;
@@ -122,7 +123,7 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/edit_product/:id', function (req, res) {
+    app.get('/edit-product/:id', function (req, res) {
         request('http://127.0.0.1:3000/product/' + req.params.id, function (err, res2, body) {
             if (err) {
                 res2.render('error', {message: err.message});
@@ -134,7 +135,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/edit_product/:id', function (req, res) {
+    app.post('/edit-product/:id', function (req, res) {
         var article = req.body.article;
         var type = req.body.type;
         var name = req.body.name;
@@ -155,7 +156,7 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/delete_product/:id', function (req, res) {
+    app.post('/delete-product/:id', function (req, res) {
         Product.remove({_id: req.params.id}, function (err) {
             if (err) {
                 res.render('error', {message: err.message});
